@@ -19,9 +19,11 @@ ${NAME} : ${OBJS} ${HEADER}
 
 clean :
 	rm -rf ${OBJS}
+	make clean -C ./minilibx/minilibx_opengl
 
 fclean : clean
 	rm -rf ${NAME}
+	make clean -C ./minilibx/minilibx_opengl
 
 re : fclean all
 
