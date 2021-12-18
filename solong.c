@@ -81,7 +81,7 @@ int main(void)
 	mlx_hook(mlx.win, 4, 1L<<2, button, &mlx);
 //	mlx_hook(mlx.win, 6, 0L, mouseh, &mlx);
 	mlx_loop_hook(mlx.mlx, render, &mlx);
-	mlx_loop_hook(mlx.mlx, move, &mlx);
+//	mlx_loop_hook(mlx.mlx, move, &mlx);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
