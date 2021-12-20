@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/20 11:16:53 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/20 12:34:54 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ typedef struct s_pers {
 	int		h;
 	int		x;
 	int		y;
-	void	*img;
-	char	*pth;
+	int		mv;
+	//void	*img;
+	void	*d_id[6];
+	void	*u_id[6];
+	void	*l_id[4];
+	void	*r_id[4];
+	//char	*pth;
 }			t_pers;
 
 typedef struct s_mlx {
