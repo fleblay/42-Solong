@@ -73,6 +73,10 @@ int	main(void)
 	mlx_hook(mlx.win, 2, 1L << 0, close_win, &mlx);
 	mlx_hook(mlx.win, 4, 1L << 2, button, &mlx);
 	mlx_loop_hook(mlx.mlx, render, &mlx);
+<<<<<<< HEAD
+=======
+//	mlx_loop_hook(mlx.mlx, move, &mlx);
+>>>>>>> 39a74fbb4992ecbb9a04b5d9478a6d72048cd211
 	mlx_loop(mlx.mlx);
 	return (0);
 }
