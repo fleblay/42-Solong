@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 10:17:37 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/20 16:19:57 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/20 19:06:36 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	close_win(int keycode, t_mlx *mlx)
+int	treat_press(int keycode, t_mlx *mlx)
 {
-	printf("keycode >%d<\n", keycode);
+//	printf("keycode >%d<\n", keycode);
 	if (keycode == 2 && !mlx->hro.mv)
 	{
 		mlx->hro.mv = 'r';
@@ -46,144 +46,158 @@ int	close_win(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-int	button(int keycode, t_mlx *mlx)
+int	treat_click(int keycode, t_mlx *mlx)
 {
 	(void)mlx;
 	printf("button keycode >%d<\n", keycode);
+
 	return (0);
 }
 
-void	movepnj(t_mlx *mlx)
+void	idle_pers(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
+{
+	if (ml->hro.mv == 0 && !ml->hro.rev)
+		f(ml->mlx, ml->win, ml->hro.idl[ml->rnd % 6], ml->hro.x, ml->hro.y);
+	if (ml->hro.mv == 0 && ml->hro.rev)
+		f(ml->mlx, ml->win, ml->hro.ridl[ml->rnd % 6], ml->hro.x, ml->hro.y);
+}
+
+void	animate(t_mlx *ml)
 {
 	t_mlx_fx_img_to_win	fx;
 
 	fx = &mlx_put_image_to_window;
-	mlx_clear_window(mlx->mlx, mlx->win);
-	if (mlx->hro.mv == 0 && !mlx->hro.rev)
-		fx(mlx->mlx, mlx->win, mlx->hro.idl[mlx->render % 6], mlx->hro.x, mlx->hro.y);
-	if (mlx->hro.mv == 0 && mlx->hro.rev)
-		fx(mlx->mlx, mlx->win, mlx->hro.ridl[mlx->render % 6], mlx->hro.x, mlx->hro.y);
-	if (mlx->hro.mv == 'r' && mlx->hro.bsy != -1)
+	mlx_clear_window(ml->mlx, ml->win);
+	idle_pers(ml, mlx_put_image_to_window);
+
+	if (ml->hro.mv == 'r') // && ml->hro.bsy != -1)
 	{
-		if (mlx->hro.bsy == 0)
-			mlx->hro.x += (1*4);
-		mlx->hro.x += (3*4);
-		fx(mlx->mlx, mlx->win, mlx->hro.run[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
-		mlx->hro.bsy++;
-		if (mlx->hro.bsy == 6)
+		if (ml->hro.bsy == 0)
+			ml->hro.x += (1*4);
+		ml->hro.x += (3*4);
+		fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+		ml->hro.bsy++;
+		if (ml->hro.bsy == 6)
 		{
-			mlx->hro.mv = 0;
-			mlx->hro.bsy = -1;
-			mlx->hro.rev = 0;
+			ml->hro.mv = 0;
+			ml->hro.bsy = -1;
+			ml->hro.rev = 0;
 		}
 	}
-	if (mlx->hro.mv == 'l' && mlx->hro.bsy != -1)
+	if (ml->hro.mv == 'l')// && ml->hro.bsy != -1)
 	{
-		if (mlx->hro.bsy == 0)
-			mlx->hro.x -= (1*4);
-		mlx->hro.x -= (3*4);
-		fx(mlx->mlx, mlx->win, mlx->hro.rrun[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
-		mlx->hro.bsy++;
-		if (mlx->hro.bsy == 6)
+		if (ml->hro.bsy == 0)
+			ml->hro.x -= (1*4);
+		ml->hro.x -= (3*4);
+		fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
+		ml->hro.bsy++;
+		if (ml->hro.bsy == 6)
 		{
-			mlx->hro.mv = 0;
-			mlx->hro.bsy = -1;
-			mlx->hro.rev = 1;
+			ml->hro.mv = 0;
+			ml->hro.bsy = -1;
+			ml->hro.rev = 1;
 		}
 	}
-	if (mlx->hro.mv == 'u' && mlx->hro.bsy != -1)
+	if (ml->hro.mv == 'u')// && ml->hro.bsy != -1)
 	{
-		if (mlx->hro.bsy == 0)
-			mlx->hro.y -= (1*4);
-		mlx->hro.y -= (3*4);
-		if (mlx->hro.rev)
-			fx(mlx->mlx, mlx->win, mlx->hro.rrun[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
+		if (ml->hro.bsy == 0)
+			ml->hro.y -= (1*4);
+		ml->hro.y -= (3*4);
+		if (ml->hro.rev)
+			fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
 		else
-			fx(mlx->mlx, mlx->win, mlx->hro.run[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
-		mlx->hro.bsy++;
-		if (mlx->hro.bsy == 6)
+			fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+		ml->hro.bsy++;
+		if (ml->hro.bsy == 6)
 		{
-			mlx->hro.mv = 0;
-			mlx->hro.bsy = -1;
+			ml->hro.mv = 0;
+			ml->hro.bsy = -1;
 		}
 	}
-	if (mlx->hro.mv == 'd' && mlx->hro.bsy != -1)
+	if (ml->hro.mv == 'd') // && ml->hro.bsy != -1)
 	{
-		if (mlx->hro.bsy == 0)
-			mlx->hro.y += (1*4);
-		mlx->hro.y += (3*4);
-		if (mlx->hro.rev)
-			fx(mlx->mlx, mlx->win, mlx->hro.rrun[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
+		if (ml->hro.bsy == 0)
+			ml->hro.y += (1*4);
+		ml->hro.y += (3*4);
+		if (ml->hro.rev)
+			fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
 		else
-			fx(mlx->mlx, mlx->win, mlx->hro.run[mlx->hro.bsy], mlx->hro.x, mlx->hro.y);
-		mlx->hro.bsy++;
-		if (mlx->hro.bsy == 6)
+			fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+		ml->hro.bsy++;
+		if (ml->hro.bsy == 6)
 		{
-			mlx->hro.mv = 0;
-			mlx->hro.bsy = -1;
+			ml->hro.mv = 0;
+			ml->hro.bsy = -1;
 		}
 	}
 }
 
-int	render(t_mlx *mlx)
+int	render(t_mlx *ml)
 {
-	if (mlx->timer == 512)
+	if (ml->timer == 512)
 	{
-		printf("Time to render\n");
-		mlx->timer = 0;
-		mlx->render++;
-		movepnj(mlx);
+		//printf("Time to render\n");
+		ml->timer = 0;
+		ml->rnd++;
+		animate(ml);
 	}
-	mlx->timer++;
+	ml->timer++;
 	return (0);
+}
+
+void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
+{
+	t_mlx_fx_xpmf_to_img	fx;
+
+	fx = &mlx_xpm_file_to_image;
+	ml->timer = 0;
+	ml->rnd = 0;
+	ml->hro.x = 0;
+	ml->hro.y = 0;
+	ml->hro.mv = 0;
+	ml->hro.rev = 0;
+	ml->mlx = mlx_init();
+	ml->win = mlx_new_window(ml->mlx, width, height, name);
+}
+
+void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
+{
+	ml->hro.idl[0] = f(ml->mlx, "./img/k_i0.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.idl[1] = f(ml->mlx, "./img/k_i1.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.idl[2] = f(ml->mlx, "./img/k_i2.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.idl[3] = f(ml->mlx, "./img/k_i3.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.idl[4] = f(ml->mlx, "./img/k_i4.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.idl[5] = f(ml->mlx, "./img/k_i5.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[0] = f(ml->mlx, "./img/k_ri0.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[1] = f(ml->mlx, "./img/k_ri1.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[2] = f(ml->mlx, "./img/k_ri2.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[3] = f(ml->mlx, "./img/k_ri3.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[4] = f(ml->mlx, "./img/k_ri4.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.ridl[5] = f(ml->mlx, "./img/k_ri5.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[0] = f(ml->mlx, "./img/k_r0.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[1] = f(ml->mlx, "./img/k_r1.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[2] = f(ml->mlx, "./img/k_r2.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[3] = f(ml->mlx, "./img/k_r3.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[4] = f(ml->mlx, "./img/k_r4.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.run[5] = f(ml->mlx, "./img/k_r5.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[0] = f(ml->mlx, "./img/k_rr0.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[1] = f(ml->mlx, "./img/k_rr1.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[2] = f(ml->mlx, "./img/k_rr2.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[3] = f(ml->mlx, "./img/k_rr3.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[4] = f(ml->mlx, "./img/k_rr4.xpm", &(ml->hro.w), &(ml->hro.h));
+	ml->hro.rrun[5] = f(ml->mlx, "./img/k_rr5.xpm", &(ml->hro.w), &(ml->hro.h));
 }
 
 int	main(void)
 {
-	t_mlx					mlx;
-	t_mlx_fx_xpmf_to_img	fx;
+	t_mlx					ml;
 
-	fx = &mlx_xpm_file_to_image;
-	mlx.timer = 0;
-	mlx.render = 0;
-	mlx.hro.x = 0;
-	mlx.hro.y = 0;
-	mlx.hro.mv = 0;
-	mlx.hro.rev = 0;
+	init_mlx_struct(&ml, 640, 640, "So Long Mother****er");
+	load_hero_img(&ml, mlx_xpm_file_to_image);
 
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 800, 600, "My window");
-	mlx.hro.idl[0] = fx(mlx.mlx, "./img/big_knight_idle_anim_f0.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.idl[1] = fx(mlx.mlx, "./img/big_knight_idle_anim_f1.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.idl[2] = fx(mlx.mlx, "./img/big_knight_idle_anim_f2.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.idl[3] = fx(mlx.mlx, "./img/big_knight_idle_anim_f3.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.idl[4] = fx(mlx.mlx, "./img/big_knight_idle_anim_f4.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.idl[5] = fx(mlx.mlx, "./img/big_knight_idle_anim_f5.xpm", &(mlx.hro.w), &(mlx.hro.h));
-
-	mlx.hro.ridl[0] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f0.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.ridl[1] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f1.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.ridl[2] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f2.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.ridl[3] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f3.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.ridl[4] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f4.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.ridl[5] = fx(mlx.mlx, "./img/revbig_knight_idle_anim_f5.xpm", &(mlx.hro.w), &(mlx.hro.h));
-
-	mlx.hro.run[0] = fx(mlx.mlx, "./img/big_knight_run_anim_f0.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.run[1] = fx(mlx.mlx, "./img/big_knight_run_anim_f1.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.run[2] = fx(mlx.mlx, "./img/big_knight_run_anim_f2.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.run[3] = fx(mlx.mlx, "./img/big_knight_run_anim_f3.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.run[4] = fx(mlx.mlx, "./img/big_knight_run_anim_f4.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.run[5] = fx(mlx.mlx, "./img/big_knight_run_anim_f5.xpm", &(mlx.hro.w), &(mlx.hro.h));
-
-	mlx.hro.rrun[0] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f0.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.rrun[1] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f1.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.rrun[2] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f2.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.rrun[3] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f3.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.rrun[4] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f4.xpm", &(mlx.hro.w), &(mlx.hro.h));
-	mlx.hro.rrun[5] = fx(mlx.mlx, "./img/revbig_knight_run_anim_f5.xpm", &(mlx.hro.w), &(mlx.hro.h));
-
-	mlx_hook(mlx.win, 2, 1L << 0, close_win, &mlx);
-	mlx_hook(mlx.win, 4, 1L << 2, button, &mlx);
-	mlx_loop_hook(mlx.mlx, render, &mlx);
-	mlx_loop(mlx.mlx);
+	mlx_hook(ml.win, 2, 1L << 0, treat_press, &ml);
+	mlx_hook(ml.win, 4, 1L << 2, treat_click, &ml);
+	mlx_loop_hook(ml.mlx, render, &ml);
+	mlx_loop(ml.mlx);
 	return (0);
 }

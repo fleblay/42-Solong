@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/20 16:15:34 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:15:02 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ typedef struct s_pers {
 	void	*ridl[6];
 	void	*run[6];
 	void	*rrun[6];
-	void	*r_id[4];
 }			t_pers;
 
 typedef struct s_mlx {
 	void	*mlx;
 	void	*win;
 	int		timer;
-	int		render;
+	int		rnd;
 	t_pers	hro;
 	t_pers	foe;
 }			t_mlx;
