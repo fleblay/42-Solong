@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 10:17:37 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/20 19:06:36 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/21 11:48:37 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,14 @@
 
 int	treat_press(int keycode, t_mlx *mlx)
 {
-//	printf("keycode >%d<\n", keycode);
 	if (keycode == 2 && !mlx->hro.mv)
-	{
-		mlx->hro.mv = 'r';
-		mlx->hro.bsy = 0;
-	}
+		mlx->hro.mv = right;
 	if (keycode == 0 && !mlx->hro.mv)
-	{
-		mlx->hro.mv = 'l';
-		mlx->hro.bsy = 0;
-	}
+		mlx->hro.mv = left;
 	if (keycode == 1 && !mlx->hro.mv)
-	{
-		mlx->hro.mv = 'd';
-		mlx->hro.bsy = 0;
-	}
+		mlx->hro.mv = down;
 	if (keycode == 13 && !mlx->hro.mv)
-	{
-		mlx->hro.mv = 'u';
-		mlx->hro.bsy = 0;
-	}
+		mlx->hro.mv = up;
 	if (keycode == 53)
 	{
 		mlx_destroy_window(mlx->mlx, mlx->win);
@@ -50,7 +37,6 @@ int	treat_click(int keycode, t_mlx *mlx)
 {
 	(void)mlx;
 	printf("button keycode >%d<\n", keycode);
-
 	return (0);
 }
 
@@ -62,81 +48,87 @@ void	idle_pers(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 		f(ml->mlx, ml->win, ml->hro.ridl[ml->rnd % 6], ml->hro.x, ml->hro.y);
 }
 
+void	mv_right(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
+{
+	if (ml->hro.bsy == 0)
+		ml->hro.x += (1 * 4);
+	ml->hro.x += (3 * 4);
+	fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	ml->hro.bsy++;
+	if (ml->hro.bsy == 6)
+	{
+		ml->hro.mv = 0;
+		ml->hro.bsy = 0;
+		ml->hro.rev = 0;
+	}
+}
+
+void	mv_left(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
+{
+	if (ml->hro.bsy == 0)
+		ml->hro.x -= (1 * 4);
+	ml->hro.x -= (3 * 4);
+	fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	ml->hro.bsy++;
+	if (ml->hro.bsy == 6)
+	{
+		ml->hro.mv = 0;
+		ml->hro.bsy = 0;
+		ml->hro.rev = 1;
+	}
+}
+
+void	mv_up(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
+{
+	if (ml->hro.bsy == 0)
+		ml->hro.y -= (1 * 4);
+	ml->hro.y -= (3 * 4);
+	if (ml->hro.rev)
+		fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	else
+		fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	ml->hro.bsy++;
+	if (ml->hro.bsy == 6)
+	{
+		ml->hro.mv = 0;
+		ml->hro.bsy = 0;
+	}
+}
+
+void	mv_down(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
+{
+	if (ml->hro.bsy == 0)
+		ml->hro.y += (1 * 4);
+	ml->hro.y += (3 * 4);
+	if (ml->hro.rev)
+		fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	else
+		fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
+	ml->hro.bsy++;
+	if (ml->hro.bsy == 6)
+	{
+		ml->hro.mv = 0;
+		ml->hro.bsy = 0;
+	}
+}
+
 void	animate(t_mlx *ml)
 {
-	t_mlx_fx_img_to_win	fx;
+	void	(*tab[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
+	tab[idle] = &idle_pers;
+	tab[right] = &mv_right;
+	tab[left] = &mv_left;
+	tab[up] = &mv_up;
+	tab[down] = &mv_down;
 
-	fx = &mlx_put_image_to_window;
 	mlx_clear_window(ml->mlx, ml->win);
-	idle_pers(ml, mlx_put_image_to_window);
-
-	if (ml->hro.mv == 'r') // && ml->hro.bsy != -1)
-	{
-		if (ml->hro.bsy == 0)
-			ml->hro.x += (1*4);
-		ml->hro.x += (3*4);
-		fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		ml->hro.bsy++;
-		if (ml->hro.bsy == 6)
-		{
-			ml->hro.mv = 0;
-			ml->hro.bsy = -1;
-			ml->hro.rev = 0;
-		}
-	}
-	if (ml->hro.mv == 'l')// && ml->hro.bsy != -1)
-	{
-		if (ml->hro.bsy == 0)
-			ml->hro.x -= (1*4);
-		ml->hro.x -= (3*4);
-		fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		ml->hro.bsy++;
-		if (ml->hro.bsy == 6)
-		{
-			ml->hro.mv = 0;
-			ml->hro.bsy = -1;
-			ml->hro.rev = 1;
-		}
-	}
-	if (ml->hro.mv == 'u')// && ml->hro.bsy != -1)
-	{
-		if (ml->hro.bsy == 0)
-			ml->hro.y -= (1*4);
-		ml->hro.y -= (3*4);
-		if (ml->hro.rev)
-			fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		else
-			fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		ml->hro.bsy++;
-		if (ml->hro.bsy == 6)
-		{
-			ml->hro.mv = 0;
-			ml->hro.bsy = -1;
-		}
-	}
-	if (ml->hro.mv == 'd') // && ml->hro.bsy != -1)
-	{
-		if (ml->hro.bsy == 0)
-			ml->hro.y += (1*4);
-		ml->hro.y += (3*4);
-		if (ml->hro.rev)
-			fx(ml->mlx, ml->win, ml->hro.rrun[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		else
-			fx(ml->mlx, ml->win, ml->hro.run[ml->hro.bsy], ml->hro.x, ml->hro.y);
-		ml->hro.bsy++;
-		if (ml->hro.bsy == 6)
-		{
-			ml->hro.mv = 0;
-			ml->hro.bsy = -1;
-		}
-	}
+	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
 }
 
 int	render(t_mlx *ml)
 {
-	if (ml->timer == 512)
+	if (ml->timer == 1024)
 	{
-		//printf("Time to render\n");
 		ml->timer = 0;
 		ml->rnd++;
 		animate(ml);
@@ -156,6 +148,7 @@ void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
 	ml->hro.y = 0;
 	ml->hro.mv = 0;
 	ml->hro.rev = 0;
+	ml->hro.bsy = 0;
 	ml->mlx = mlx_init();
 	ml->win = mlx_new_window(ml->mlx, width, height, name);
 }
@@ -194,7 +187,6 @@ int	main(void)
 
 	init_mlx_struct(&ml, 640, 640, "So Long Mother****er");
 	load_hero_img(&ml, mlx_xpm_file_to_image);
-
 	mlx_hook(ml.win, 2, 1L << 0, treat_press, &ml);
 	mlx_hook(ml.win, 4, 1L << 2, treat_click, &ml);
 	mlx_loop_hook(ml.mlx, render, &ml);
