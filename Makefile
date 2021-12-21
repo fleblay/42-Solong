@@ -15,7 +15,7 @@ ${NAME} : ${OBJS} ${HEADER}
 	make -C ./libft
 	gcc -Wall -Wextra -Werror -L ./minilibx/minilibx_opengl -lmlx -L ./libft -lft -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
 
-%.o : %.c
+%.o : %.c ${HEADER}
 	gcc -Wall -Wextra -Werror -c $< ${INCLUDES} -o $@
 
 clean :

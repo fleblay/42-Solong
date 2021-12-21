@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 12:14:03 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/21 17:57:38 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "solong.h"
 #include <stddef.h>
 
-void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
+void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 {
 	ml->timer = 0;
 	ml->rnd = 0;
@@ -24,8 +24,17 @@ void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
 	ml->hro.rev = 0;
 	ml->hro.bsy = 0;
 	ml->map = NULL;
+	ml->flo = NULL;
+	ml->wal = NULL;
+	ml->exi = NULL;
+	ml->col = NULL;
+	ml->maph = 0;
+	ml->mapw = 0;
 	ml->mlx = mlx_init();
-	ml->win = mlx_new_window(ml->mlx, width, height, name);
+	load_hero_img(ml, &mlx_xpm_file_to_image);
+	load_map_img(ml, &mlx_xpm_file_to_image);
+	getmap(file, ml);
+	ml->win = mlx_new_window(ml->mlx, ml->mapw*ml->flow, ml->maph*ml->floh, name);
 }
 
 void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
@@ -54,4 +63,12 @@ void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
 	ml->hro.rrun[3] = f(ml->mlx, "./img/k_rr3.xpm", &(ml->hro.w), &(ml->hro.h));
 	ml->hro.rrun[4] = f(ml->mlx, "./img/k_rr4.xpm", &(ml->hro.w), &(ml->hro.h));
 	ml->hro.rrun[5] = f(ml->mlx, "./img/k_rr5.xpm", &(ml->hro.w), &(ml->hro.h));
+}
+
+void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
+{
+	ml->flo = f(ml->mlx, "./img/flo.xpm", &(ml->flow), &(ml->floh));
+	ml->wal = f(ml->mlx, "./img/wal.xpm", &(ml->walw), &(ml->walh));
+	ml->exi = f(ml->mlx, "./img/exi.xpm", &(ml->exiw), &(ml->exih));
+	ml->col = f(ml->mlx, "./img/col.xpm", &(ml->colw), &(ml->colh));
 }

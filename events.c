@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 12:07:53 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/21 19:10:38 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@
 
 int	treat_press(int keycode, t_mlx *mlx)
 {
-	if (keycode == 2 && !mlx->hro.mv)
+	if (keycode == 2 && !mlx->hro.mv && r_isnotwall(mlx))
 		mlx->hro.mv = right;
-	if (keycode == 0 && !mlx->hro.mv)
+	else if (keycode == 0 && !mlx->hro.mv && l_isnotwall(mlx))
 		mlx->hro.mv = left;
-	if (keycode == 1 && !mlx->hro.mv)
+	else if (keycode == 1 && !mlx->hro.mv && d_isnotwall(mlx))
+	{
 		mlx->hro.mv = down;
-	if (keycode == 13 && !mlx->hro.mv)
+	}
+	else if (keycode == 13 && !mlx->hro.mv && u_isnotwall(mlx))
 		mlx->hro.mv = up;
-	if (keycode == 53)
+	else if (keycode == 53)
 	{
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
@@ -40,6 +42,32 @@ int	treat_click(int keycode, t_mlx *mlx)
 	return (0);
 }
 
+void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ml->maph)
+	{
+		j = 0;
+		while (j < ml->mapw)
+		{
+			if (ml->map[i][j] == '0' || ml->map[i][j] == 'E'
+					|| ml->map[i][j] == 'C' || ml->map[i][j] == 'P')
+				f(ml->mlx, ml->win, ml->flo, ml->flow * j, ml->floh * i);
+			if (ml->map[i][j] == '1')
+				f(ml->mlx, ml->win, ml->wal, ml->walw * j, ml->walh * i);
+			if (ml->map[i][j] == 'C')
+				f(ml->mlx, ml->win, ml->col, ml->colw * j, ml->colh * i);
+			if (ml->map[i][j] == 'E')
+				f(ml->mlx, ml->win, ml->exi, ml->exiw * j, ml->exih * i);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	animate(t_mlx *ml)
 {
 	void	(*tab[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
@@ -50,12 +78,13 @@ void	animate(t_mlx *ml)
 	tab[up] = &mv_up;
 	tab[down] = &mv_down;
 	mlx_clear_window(ml->mlx, ml->win);
+	put_background(ml, &mlx_put_image_to_window);
 	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
 }
 
 int	render(t_mlx *ml)
 {
-	if (ml->timer == 1024)
+	if (ml->timer == 512)
 	{
 		ml->timer = 0;
 		ml->rnd++;
