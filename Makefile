@@ -1,4 +1,4 @@
-SRCS = solong.c
+SRCS = solong.c animate.c mlx.c events.c
 
 OBJS = ${SRCS:.c=.o}
 
