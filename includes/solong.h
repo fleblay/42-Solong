@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 12:06:05 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:38:57 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_mlx {
 	int		rnd;
 	t_pers	hro;
 	t_pers	foe;
+	char	*map;
 }			t_mlx;
 
 enum	{idle = 0, right = 1 , left = 2, up = 3, down = 4};
@@ -48,5 +49,6 @@ int		treat_press(int keycode, t_mlx *mlx);
 int		treat_click(int keycode, t_mlx *mlx);
 void	animate(t_mlx *ml);
 int		render(t_mlx *ml);
+char	**getmap(char *str);
 
 #endif

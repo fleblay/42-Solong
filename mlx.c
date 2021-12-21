@@ -6,12 +6,13 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 12:06:29 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:14:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
+#include <stddef.h>
 
 void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
 {
@@ -22,6 +23,7 @@ void	init_mlx_struct(t_mlx *ml, int width, int height, char *name)
 	ml->hro.mv = 0;
 	ml->hro.rev = 0;
 	ml->hro.bsy = 0;
+	ml->map = NULL;
 	ml->mlx = mlx_init();
 	ml->win = mlx_new_window(ml->mlx, width, height, name);
 }
