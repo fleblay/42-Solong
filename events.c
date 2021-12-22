@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 10:54:43 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:41:23 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 		j = 0;
 		while (j < ml->mapw)
 		{
-			if (ml->map[i][j] == '0' || ml->map[i][j] == 'E'
-					|| ml->map[i][j] == 'C' || ml->map[i][j] == 'P')
+			if (ml->map[i][j] != '1')
 				f(ml->mlx, ml->win, ml->flo, ml->flow * j, ml->floh * i);
 			if (ml->map[i][j] == '1')
 				f(ml->mlx, ml->win, ml->wal, ml->walw * j, ml->walh * i);
@@ -79,6 +78,8 @@ void	animate(t_mlx *ml)
 	mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
 	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
+	if (!isany(ml, 'C'))
+		replace1(ml, 'E', 'e');
 }
 
 int	render(t_mlx *ml)

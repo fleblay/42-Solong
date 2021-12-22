@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 10:49:28 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:55:57 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	mv_up(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_down(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	init_mlx_struct(t_mlx *ml, char *name, char *file);
 void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
+void	load_foe_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 int		treat_press(int keycode, t_mlx *mlx);
 int		treat_click(int keycode, t_mlx *mlx);
