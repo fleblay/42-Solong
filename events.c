@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 19:10:38 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 10:54:43 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@
 
 int	treat_press(int keycode, t_mlx *mlx)
 {
-	if (keycode == 2 && !mlx->hro.mv && r_isnotwall(mlx))
+	if (keycode == 2 && !mlx->hro.mv && mv_ok(mlx, right, mlx->hro.c))
 		mlx->hro.mv = right;
-	else if (keycode == 0 && !mlx->hro.mv && l_isnotwall(mlx))
+	else if (keycode == 0 && !mlx->hro.mv && mv_ok(mlx, left, mlx->hro.c))
 		mlx->hro.mv = left;
-	else if (keycode == 1 && !mlx->hro.mv && d_isnotwall(mlx))
-	{
+	else if (keycode == 1 && !mlx->hro.mv && mv_ok(mlx, down, mlx->hro.c))
 		mlx->hro.mv = down;
-	}
-	else if (keycode == 13 && !mlx->hro.mv && u_isnotwall(mlx))
+	else if (keycode == 13 && !mlx->hro.mv && mv_ok(mlx, up, mlx->hro.c))
 		mlx->hro.mv = up;
 	else if (keycode == 53)
 	{
@@ -62,7 +60,8 @@ void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 				f(ml->mlx, ml->win, ml->col, ml->colw * j, ml->colh * i);
 			if (ml->map[i][j] == 'E')
 				f(ml->mlx, ml->win, ml->exi, ml->exiw * j, ml->exih * i);
-			j++;
+			if (ml->map[i][j] == 'e')
+				f(ml->mlx, ml->win, ml->out, ml->outw * j, ml->outh * i); j++;
 		}
 		i++;
 	}

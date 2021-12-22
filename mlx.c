@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/21 17:57:38 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 10:52:45 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 {
 	ml->timer = 0;
 	ml->rnd = 0;
+	ml->hro.c = 'P';
 	ml->hro.x = 0;
 	ml->hro.y = 0;
 	ml->hro.mv = 0;
@@ -28,13 +29,15 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 	ml->wal = NULL;
 	ml->exi = NULL;
 	ml->col = NULL;
+	ml->out = NULL;
 	ml->maph = 0;
 	ml->mapw = 0;
 	ml->mlx = mlx_init();
 	load_hero_img(ml, &mlx_xpm_file_to_image);
 	load_map_img(ml, &mlx_xpm_file_to_image);
 	getmap(file, ml);
-	ml->win = mlx_new_window(ml->mlx, ml->mapw*ml->flow, ml->maph*ml->floh, name);
+	ml->win = mlx_new_window(ml->mlx, ml->mapw * ml->flow,
+			ml->maph * ml->floh, name);
 }
 
 void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
@@ -71,4 +74,5 @@ void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
 	ml->wal = f(ml->mlx, "./img/wal.xpm", &(ml->walw), &(ml->walh));
 	ml->exi = f(ml->mlx, "./img/exi.xpm", &(ml->exiw), &(ml->exih));
 	ml->col = f(ml->mlx, "./img/col.xpm", &(ml->colw), &(ml->colh));
+	ml->out = f(ml->mlx, "./img/out.xpm", &(ml->outw), &(ml->outh));
 }
