@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:11:43 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 10:54:55 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 18:42:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ int	mv_ok(t_mlx *ml, int move, char pers_char)
 	int		tile;
 
 	tab[0] = NULL;
-	tab[1] = &r_is; 
-	tab[2] = &l_is; 
-	tab[3] = &u_is; 
-	tab[4] = &d_is; 
+	tab[1] = &r_is;
+	tab[2] = &l_is;
+	tab[3] = &u_is;
+	tab[4] = &d_is;
 	tile = tab[move](ml, pers_char);
-	if (tile == '0' || tile == 'C')
+	if (pers_char == 'P' && (tile == '0' || tile == 'C'))
+		return (1);
+	else if (tile == '0')
 		return (1);
 	return (0);
 }

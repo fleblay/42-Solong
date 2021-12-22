@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 17:38:15 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 19:19:24 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ int	treat_press(int keycode, t_mlx *mlx)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
-	/*
-	int i = 1;
-	if (!mlx->foe.mv)
-	{
-		while (!mv_ok(mlx, i, mlx->foe.c))
-			i++;
-	}
-	mlx->foe.mv = i;
-	*/
 	return (0);
 }
 
@@ -69,7 +60,8 @@ void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 			if (ml->map[i][j] == 'E')
 				f(ml->mlx, ml->win, ml->exi, ml->exiw * j, ml->exih * i);
 			if (ml->map[i][j] == 'e')
-				f(ml->mlx, ml->win, ml->out, ml->outw * j, ml->outh * i); j++;
+				f(ml->mlx, ml->win, ml->out, ml->outw * j, ml->outh * i);
+			j++;
 		}
 		i++;
 	}
@@ -96,33 +88,45 @@ void	animate(t_mlx *ml)
 	put_background(ml, &mlx_put_image_to_window);
 	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
 
-	static int prev = 1;
+	int	try = 0;
+	static int	waiting  = 0; // static to add in pers struct of foe
+	static int prev = right;
 
-	//printf("BEFORE prev : %d foe.mv : %d foe.bsy : %d\n", prev, ml->foe.mv, ml->foe.bsy);
-	if (!ml->foe.mv)
+	printf("BEFORE waiting : %d ml->rnd : %d prev : %d foe.mv : %d foe.bsy : %d\n", waiting,  ml->rnd, prev, ml->foe.mv, ml->foe.bsy);
+	if (waiting == 0 && !ml->foe.mv/* && ml->rnd % 7 != 0*/)
 	{
 		ml->foe.mv = prev;
-		//if (!ml->foe.mv)
-		//	ml->foe.mv++;
+		if (!ml->foe.mv) // ces 2 lignes in case of infinity loop
+			ml->foe.mv++; // ces 2 lignes in case of infinity loop
 		while (!mv_ok(ml, ml->foe.mv, ml->foe.c))
 		{
 			ml->foe.mv++;
 			ml->foe.mv = ml->foe.mv % 5;
 			if (!ml->foe.mv)
 				ml->foe.mv++;
+			printf("ici\n");
+			try++;
+			if (try >= 5)
+			{
+				waiting = 50;
+				ml->foe.mv = 0;
+				break ;
+			}
 		}
 	prev = ml->foe.mv;
 	}
-	//printf("AFTER prev : %d foe.mv : %d foe.bsy : %d\n",prev, ml->foe.mv, ml->foe.bsy);
+	printf("AFTER waiting : %d ml->rnd : %d prev : %d foe.mv : %d foe.bsy : %d\n", waiting,  ml->rnd, prev, ml->foe.mv, ml->foe.bsy);
 
 	tab2[ml->foe.mv](ml, &mlx_put_image_to_window);
 	if (!isany(ml, 'C'))
 		replace1(ml, 'E', 'e');
+	if (waiting > 0)
+		waiting--;
 }
 
 int	render(t_mlx *ml)
 {
-	if (ml->timer == 400)
+	if (ml->timer == 256)
 	{
 		ml->timer = 0;
 		ml->rnd++;
