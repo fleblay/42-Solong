@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 12:57:16 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:51:07 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 	ml->hro.rev = 0;
 	ml->hro.bsy = 0;
 
-	ml->foe.c = 'P';
+	ml->foe.c = 'F';
 	ml->foe.x = 0;
 	ml->foe.y = 0;
 	ml->foe.mv = 0;

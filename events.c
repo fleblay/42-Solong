@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 12:41:23 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:38:15 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ int	treat_press(int keycode, t_mlx *mlx)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		exit(0);
 	}
+	/*
+	int i = 1;
+	if (!mlx->foe.mv)
+	{
+		while (!mv_ok(mlx, i, mlx->foe.c))
+			i++;
+	}
+	mlx->foe.mv = i;
+	*/
 	return (0);
 }
 
@@ -69,22 +78,51 @@ void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 void	animate(t_mlx *ml)
 {
 	void	(*tab[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
+	void	(*tab2[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
 
 	tab[idle] = &idle_pers;
 	tab[right] = &mv_right;
 	tab[left] = &mv_left;
 	tab[up] = &mv_up;
 	tab[down] = &mv_down;
+
+	tab2[idle] = &idle_persfoe;
+	tab2[right] = &mv_rightfoe;
+	tab2[left] = &mv_leftfoe;
+	tab2[up] = &mv_upfoe;
+	tab2[down] = &mv_downfoe;
+
 	mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
 	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
+
+	static int prev = 1;
+
+	//printf("BEFORE prev : %d foe.mv : %d foe.bsy : %d\n", prev, ml->foe.mv, ml->foe.bsy);
+	if (!ml->foe.mv)
+	{
+		ml->foe.mv = prev;
+		//if (!ml->foe.mv)
+		//	ml->foe.mv++;
+		while (!mv_ok(ml, ml->foe.mv, ml->foe.c))
+		{
+			ml->foe.mv++;
+			ml->foe.mv = ml->foe.mv % 5;
+			if (!ml->foe.mv)
+				ml->foe.mv++;
+		}
+	prev = ml->foe.mv;
+	}
+	//printf("AFTER prev : %d foe.mv : %d foe.bsy : %d\n",prev, ml->foe.mv, ml->foe.bsy);
+
+	tab2[ml->foe.mv](ml, &mlx_put_image_to_window);
 	if (!isany(ml, 'C'))
 		replace1(ml, 'E', 'e');
 }
 
 int	render(t_mlx *ml)
 {
-	if (ml->timer == 512)
+	if (ml->timer == 400)
 	{
 		ml->timer = 0;
 		ml->rnd++;

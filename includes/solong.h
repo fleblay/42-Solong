@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 12:55:57 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:19:35 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ void	mv_right(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_left(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_up(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_down(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
+
+void	idle_persfoe(t_mlx *ml, int (*f)(void *, void *, void *, int, int));
+void	mv_rightfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
+void	mv_leftfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
+void	mv_upfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
+void	mv_downfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
+
 void	init_mlx_struct(t_mlx *ml, char *name, char *file);
 void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	load_foe_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
@@ -77,7 +84,8 @@ void	animate(t_mlx *ml);
 int		render(t_mlx *ml);
 int		getmap(char *str, t_mlx *ml);
 void	set_size(t_mlx *ml);
-void	set_hro_pos(t_mlx *ml);
+void	set_pers_pos(t_mlx *ml, t_pers *pers);
+//void	set_hro_pos(t_mlx *ml);
 char	r_is(t_mlx *ml, char pers_char);
 char	l_is(t_mlx *ml, char pers_char);
 char	d_is(t_mlx *ml, char pers_char);
