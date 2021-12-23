@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 18:45:30 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:58:05 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 #include "solong.h"
 #include <stddef.h>
 
+void	init_pers(t_pers *pers, char pers_char)
+{
+	pers->c = pers_char;
+	pers->x = 0;
+	pers->y = 0;
+	pers->mv = 0;
+	pers->rev = 0;
+	pers->bsy = 0;
+	pers->pmv = right;
+	pers->wait = 0;
+	pers->steps = 0;
+}
+
 void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 {
 	ml->timer = 0;
 	ml->rnd = 0;
-	ml->hro.c = 'P';
-	ml->hro.x = 0;
-	ml->hro.y = 0;
-	ml->hro.mv = 0;
-	ml->hro.rev = 0;
-	ml->hro.bsy = 0;
-
-	ml->foe.c = 'F';
-	ml->foe.x = 0;
-	ml->foe.y = 0;
-	ml->foe.mv = 0;
-	ml->foe.rev = 0;
-	ml->foe.bsy = 0;
-
+	init_pers(&(ml->hro), 'P');
+	init_pers(&(ml->foe), 'F');
 	ml->map = NULL;
 	ml->flo = NULL;
 	ml->wal = NULL;

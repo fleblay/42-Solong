@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 09:05:07 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 12:41:46 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:07:04 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	mv_r(t_mlx *ml, char pers_char)
 			{
 				ml->map[i][j] = '0';
 				ml->map[i][j + 1] = pers_char;
+				if (pers_char == 'P')
+					ml->hro.steps++;
 				return ;
 			}
 			j++;
@@ -50,6 +52,8 @@ void	mv_l(t_mlx *ml, char pers_char)
 			{
 				ml->map[i][j] = '0';
 				ml->map[i][j - 1] = pers_char;
+				if (pers_char == 'P')
+					ml->hro.steps++;
 				return ;
 			}
 			j++;
@@ -73,6 +77,8 @@ void	mv_u(t_mlx *ml, char pers_char)
 			{
 				ml->map[i][j] = '0';
 				ml->map[i - 1][j] = pers_char;
+				if (pers_char == 'P')
+					ml->hro.steps++;
 				return ;
 			}
 			j++;
@@ -96,6 +102,8 @@ void	mv_d(t_mlx *ml, char pers_char)
 			{
 				ml->map[i][j] = '0';
 				ml->map[i + 1][j] = pers_char;
+				if (pers_char == 'P')
+					ml->hro.steps++;
 				return ;
 			}
 			j++;

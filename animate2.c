@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:09:55 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 18:50:45 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:01:51 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	mv_rightfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 		ml->foe.mv = 0;
 		ml->foe.bsy = 0;
 		ml->foe.rev = 0;
-	//	mv_r(ml, ml->foe.c);
 	}
 }
 
@@ -56,7 +55,6 @@ void	mv_leftfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 		ml->foe.mv = 0;
 		ml->foe.bsy = 0;
 		ml->foe.rev = 1;
-	//	mv_l(ml, ml->foe.c);
 	}
 }
 
@@ -77,7 +75,6 @@ void	mv_upfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 	{
 		ml->foe.mv = 0;
 		ml->foe.bsy = 0;
-		//mv_u(ml, ml->foe.c);
 	}
 }
 
@@ -98,6 +95,5 @@ void	mv_downfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 	{
 		ml->foe.mv = 0;
 		ml->foe.bsy = 0;
-	//	mv_d(ml, ml->foe.c);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 19:19:24 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:01:44 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ int	treat_click(int keycode, t_mlx *mlx)
 	return (0);
 }
 
+int	render(t_mlx *ml)
+{
+	if (ml->timer == 256)
+	{
+		ml->timer = 0;
+		ml->rnd++;
+		animate(ml);
+	}
+	ml->timer++;
+	return (0);
+}
+
 void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 {
 	int	i;
@@ -67,71 +79,30 @@ void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 	}
 }
 
-void	animate(t_mlx *ml)
+void	get_foe_mv(t_mlx *ml)
 {
-	void	(*tab[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
-	void	(*tab2[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
+	int	trymv;
 
-	tab[idle] = &idle_pers;
-	tab[right] = &mv_right;
-	tab[left] = &mv_left;
-	tab[up] = &mv_up;
-	tab[down] = &mv_down;
-
-	tab2[idle] = &idle_persfoe;
-	tab2[right] = &mv_rightfoe;
-	tab2[left] = &mv_leftfoe;
-	tab2[up] = &mv_upfoe;
-	tab2[down] = &mv_downfoe;
-
-	mlx_clear_window(ml->mlx, ml->win);
-	put_background(ml, &mlx_put_image_to_window);
-	tab[ml->hro.mv](ml, &mlx_put_image_to_window);
-
-	int	try = 0;
-	static int	waiting  = 0; // static to add in pers struct of foe
-	static int prev = right;
-
-	printf("BEFORE waiting : %d ml->rnd : %d prev : %d foe.mv : %d foe.bsy : %d\n", waiting,  ml->rnd, prev, ml->foe.mv, ml->foe.bsy);
-	if (waiting == 0 && !ml->foe.mv/* && ml->rnd % 7 != 0*/)
+	trymv = 0;
+	if (ml->foe.wait == 0 && !ml->foe.mv)
 	{
-		ml->foe.mv = prev;
-		if (!ml->foe.mv) // ces 2 lignes in case of infinity loop
-			ml->foe.mv++; // ces 2 lignes in case of infinity loop
+		ml->foe.mv = ml->foe.pmv;
+		if (!ml->foe.mv)
+			ml->foe.mv++;
 		while (!mv_ok(ml, ml->foe.mv, ml->foe.c))
 		{
 			ml->foe.mv++;
 			ml->foe.mv = ml->foe.mv % 5;
 			if (!ml->foe.mv)
 				ml->foe.mv++;
-			printf("ici\n");
-			try++;
-			if (try >= 5)
+			trymv++;
+			if (trymv == 4)
 			{
-				waiting = 50;
+				ml->foe.wait = 20;
 				ml->foe.mv = 0;
 				break ;
 			}
 		}
-	prev = ml->foe.mv;
+	ml->foe.pmv = ml->foe.mv;
 	}
-	printf("AFTER waiting : %d ml->rnd : %d prev : %d foe.mv : %d foe.bsy : %d\n", waiting,  ml->rnd, prev, ml->foe.mv, ml->foe.bsy);
-
-	tab2[ml->foe.mv](ml, &mlx_put_image_to_window);
-	if (!isany(ml, 'C'))
-		replace1(ml, 'E', 'e');
-	if (waiting > 0)
-		waiting--;
-}
-
-int	render(t_mlx *ml)
-{
-	if (ml->timer == 256)
-	{
-		ml->timer = 0;
-		ml->rnd++;
-		animate(ml);
-	}
-	ml->timer++;
-	return (0);
 }

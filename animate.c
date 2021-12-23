@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:51:19 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 18:53:05 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 11:01:17 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	mv_right(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 		ml->hro.mv = 0;
 		ml->hro.bsy = 0;
 		ml->hro.rev = 0;
-//		mv_r(ml, ml->hro.c);
 	}
 }
 
@@ -56,7 +55,6 @@ void	mv_left(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 		ml->hro.mv = 0;
 		ml->hro.bsy = 0;
 		ml->hro.rev = 1;
-//		mv_l(ml, ml->hro.c);
 	}
 }
 
@@ -77,7 +75,6 @@ void	mv_up(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 	{
 		ml->hro.mv = 0;
 		ml->hro.bsy = 0;
-//		mv_u(ml, ml->hro.c);
 	}
 }
 
@@ -98,6 +95,5 @@ void	mv_down(t_mlx *ml, int (*fx)(void *, void *, void *, int, int))
 	{
 		ml->hro.mv = 0;
 		ml->hro.bsy = 0;
-//		mv_d(ml, ml->hro.c);
 	}
 }
