@@ -6,13 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 13:00:31 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 15:55:51 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stdlib.h>
 #include <stdio.h>
 
 int	treat_press(int keycode, t_mlx *mlx)
@@ -26,10 +25,7 @@ int	treat_press(int keycode, t_mlx *mlx)
 	else if (keycode == 13 && !mlx->hro.mv && !mv_nok(mlx, up, mlx->hro.c))
 		mlx->hro.mv = up;
 	else if (keycode == 53)
-	{
-		mlx_destroy_window(mlx->mlx, mlx->win);
-		exit(0);
-	}
+		custom_exit(mlx);
 	return (0);
 }
 
@@ -92,7 +88,10 @@ void	get_foe_mv(t_mlx *ml)
 		while (ml->foe.mv && mv_nok(ml, ml->foe.mv, ml->foe.c))
 		{
 			if (mv_nok(ml, ml->foe.mv, ml->foe.c) == 'P')
+			{
 				printf("Colide Hero\n");
+				ml->gameover = 1;
+			}
 			ml->foe.mv = (ml->foe.mv + 1) % 5;
 			trymv++;
 			if (trymv == 4)

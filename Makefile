@@ -1,4 +1,4 @@
-SRCS = solong.c animate.c animate2.c mlx.c events.c events2.c \
+SRCS = solong.c animate.c animate2.c mlx.c mlx2.c events.c events2.c \
 map.c check_tiles.c check_tiles2.c  mv_hero.c
 
 OBJS = ${SRCS:.c=.o}

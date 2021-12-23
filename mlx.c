@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 11:58:05 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 16:29:08 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 {
 	ml->timer = 0;
 	ml->rnd = 0;
+	ml->gameover = 0;
 	init_pers(&(ml->hro), 'P');
 	init_pers(&(ml->foe), 'F');
 	ml->map = NULL;
@@ -113,4 +114,5 @@ void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
 	ml->exi = f(ml->mlx, "./img/exi.xpm", &(ml->exiw), &(ml->exih));
 	ml->col = f(ml->mlx, "./img/col.xpm", &(ml->colw), &(ml->colh));
 	ml->out = f(ml->mlx, "./img/out.xpm", &(ml->outw), &(ml->outh));
+	//ml->out2[0] = f(ml->mlx, "./img/out2_0.xpm", &(ml->out2w), &(ml->out2h));
 }

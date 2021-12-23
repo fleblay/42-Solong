@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/23 12:14:26 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 16:13:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,49 @@ void	load_fx_mv(void (*tab1[])(), void (*tab2[])())
 	tab2[down] = &mv_downfoe;
 }
 
+int	put_score(t_mlx *ml)
+{
+	char	*score;
+
+	score = ft_itoa(ml->hro.steps);
+	if (!score)
+		return (0);
+	mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
+	free(score);
+	if (ml->gameover)
+	{
+		ml->hro.mv = idle;
+		ml->foe.mv = idle;
+		if (ml->gameover == 2)
+			mlx_string_put(ml->mlx, ml->win, 20, 12, 0x00FF0000, "YOU WIN");
+		else
+			mlx_string_put(ml->mlx, ml->win, 20, 12, 0x00FF0000, "YOU LOOSE");
+	}
+	return (1);
+}
+
+void	get_end(t_mlx *ml)
+{
+	if (!isany(ml, 'C'))
+		replace1(ml, 'E', 'e');
+	if (!isany(ml, 'E') && !isany(ml, 'e'))
+		ml->gameover = 2;
+}
+
 void	animate(t_mlx *ml)
 {
 	void	(*hro_mv[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
 	void	(*foe_mv[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
-	char	*score;
 
-	score = ft_itoa(ml->hro.steps);
-	// Gerer le cas ou ITOA ne fonctionne pas ! (sinon crash)
 	load_fx_mv(hro_mv, foe_mv);
 	mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
-	mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
-	free(score);
-	hro_mv[ml->hro.mv](ml, &mlx_put_image_to_window);
 	get_foe_mv(ml);
+	if (!put_score(ml))
+		custom_exit(ml);
+	hro_mv[ml->hro.mv](ml, &mlx_put_image_to_window);
 	foe_mv[ml->foe.mv](ml, &mlx_put_image_to_window);
-	if (!isany(ml, 'C'))
-		replace1(ml, 'E', 'e');
+	get_end(ml);
 	if (ml->foe.wait > 0)
 		ml->foe.wait--;
 }

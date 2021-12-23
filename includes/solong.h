@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 12:45:27 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 16:27:47 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mlx {
 	char	**map;
 	int		maph;
 	int		mapw;
+	int		gameover;
 
 	void	*wal;
 	int		walh;
@@ -62,6 +63,10 @@ typedef struct s_mlx {
 	int		outh;
 	int		outw;
 
+	void	*out2[14];
+	int		out2h;
+	int		out2w;
+
 }			t_mlx;
 
 enum	{idle = 0, right = 1 , left = 2, up = 3, down = 4};
@@ -80,11 +85,14 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file);
 void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	load_foe_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
+void	custom_exit(t_mlx *ml);
 int		treat_press(int keycode, t_mlx *mlx);
 int		treat_click(int keycode, t_mlx *mlx);
 void	get_foe_mv(t_mlx *ml);
 void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int));
+int		put_score(t_mlx *ml);
 void	load_fx_mv(void (*tab1[])(), void (*tab2[])());
+void	get_end(t_mlx *ml);
 void	animate(t_mlx *ml);
 int		render(t_mlx *ml);
 int		getmap(char *str, t_mlx *ml);
