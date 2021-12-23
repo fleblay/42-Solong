@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 16:29:08 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:08:39 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 
 void	init_pers(t_pers *pers, char pers_char)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 6)
+	{
+		pers->idl[i] = NULL;
+		pers->ridl[i] = NULL;
+		pers->run[i] = NULL;
+		pers->rrun[i] = NULL;
+	}
 	pers->c = pers_char;
 	pers->x = 0;
 	pers->y = 0;
@@ -29,6 +39,9 @@ void	init_pers(t_pers *pers, char pers_char)
 
 void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 {
+	int	i;
+
+	i = -1;
 	ml->timer = 0;
 	ml->rnd = 0;
 	ml->gameover = 0;
@@ -39,7 +52,9 @@ void	init_mlx_struct(t_mlx *ml, char *name, char *file)
 	ml->wal = NULL;
 	ml->exi = NULL;
 	ml->col = NULL;
-	ml->out = NULL;
+	while (++i < 15)
+		ml->out2[i] = NULL;
+	ml->anim = -1;
 	ml->maph = 0;
 	ml->mapw = 0;
 	ml->mlx = mlx_init();
@@ -113,6 +128,19 @@ void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *))
 	ml->wal = f(ml->mlx, "./img/wal.xpm", &(ml->walw), &(ml->walh));
 	ml->exi = f(ml->mlx, "./img/exi.xpm", &(ml->exiw), &(ml->exih));
 	ml->col = f(ml->mlx, "./img/col.xpm", &(ml->colw), &(ml->colh));
-	ml->out = f(ml->mlx, "./img/out.xpm", &(ml->outw), &(ml->outh));
-	//ml->out2[0] = f(ml->mlx, "./img/out2_0.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[0] = f(ml->mlx, "./img/out2_0.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[1] = f(ml->mlx, "./img/out2_1.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[2] = f(ml->mlx, "./img/out2_2.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[3] = f(ml->mlx, "./img/out2_3.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[4] = f(ml->mlx, "./img/out2_4.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[5] = f(ml->mlx, "./img/out2_5.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[6] = f(ml->mlx, "./img/out2_6.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[7] = f(ml->mlx, "./img/out2_7.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[8] = f(ml->mlx, "./img/out2_8.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[9] = f(ml->mlx, "./img/out2_9.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[10] = f(ml->mlx, "./img/out2_10.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[11] = f(ml->mlx, "./img/out2_11.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[12] = f(ml->mlx, "./img/out2_12.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[13] = f(ml->mlx, "./img/out2_13.xpm", &(ml->out2w), &(ml->out2h));
+	ml->out2[14] = f(ml->mlx, "./img/out.xpm", &(ml->out2w), &(ml->out2h));
 }

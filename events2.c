@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/23 16:13:26 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:01:59 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ int	put_score(t_mlx *ml)
 void	get_end(t_mlx *ml)
 {
 	if (!isany(ml, 'C'))
-		replace1(ml, 'E', 'e');
+	{
+		if (isany(ml, 'E'))
+		{
+			replace1(ml, 'E', 'e');
+			ml->anim++;
+		}
+	}
 	if (!isany(ml, 'E') && !isany(ml, 'e'))
 		ml->gameover = 2;
 }

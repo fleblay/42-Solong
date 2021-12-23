@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 10:17:37 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 15:16:00 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:10:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ int	main(int ac, char *av[])
 {
 	t_mlx	ml;
 
+	ml.win = NULL;
+	ml.mlx = NULL;
 	if (ac != 2)
 		return (0);
 	init_mlx_struct(&ml, "So Long Mother****er", av[1]);
 	mlx_hook(ml.win, 2, 1L << 0, treat_press, &ml);
-	mlx_hook(ml.win, 4, 1L << 2, treat_click, &ml);
 	mlx_loop_hook(ml.mlx, render, &ml);
 	mlx_loop(ml.mlx);
 	return (0);
 }
+/*
+mlx_hook(ml.win, 4, 1L << 2, treat_click, &ml);
+*/

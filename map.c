@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:12:40 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 14:53:31 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:27:38 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,17 @@ int	getmap(char *str, t_mlx *ml)
 	fd = 0;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
-		return (0);
+		custom_exit(ml);
 	ret = read(fd, buf, 1000000);
 	if (ret <= 0)
-		return (0);
+		custom_exit(ml);
 	buf[ret] = '\0';
 	ml->map = ft_split(buf, '\n');
+	if (!ml->map)
+		custom_exit(ml);
+	//if (!check_map) focntion de verif de map a faire
+		//custom_exit(ml);
+		// Attention : map valide si pas d'enemies To fix !
 	set_size(ml);
 	set_pers_pos(ml, &(ml->hro));
 	set_pers_pos(ml, &(ml->foe));
@@ -68,4 +73,10 @@ void	set_pers_pos(t_mlx *ml, t_pers *pers)
 		}
 		i++;
 	}
+}
+
+int	check_map(char **map)
+{
+	(void)map;
+	return (1);
 }

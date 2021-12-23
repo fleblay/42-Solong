@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 16:27:47 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:20:01 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ typedef struct s_mlx {
 	int		exih;
 	int		exiw;
 
-	void	*out;
-	int		outh;
-	int		outw;
-
-	void	*out2[14];
+	void	*out2[15];
 	int		out2h;
 	int		out2w;
+	int		anim;
 
 }			t_mlx;
 
@@ -87,7 +84,6 @@ void	load_foe_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
 void	custom_exit(t_mlx *ml);
 int		treat_press(int keycode, t_mlx *mlx);
-int		treat_click(int keycode, t_mlx *mlx);
 void	get_foe_mv(t_mlx *ml);
 void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int));
 int		put_score(t_mlx *ml);
@@ -98,6 +94,7 @@ int		render(t_mlx *ml);
 int		getmap(char *str, t_mlx *ml);
 void	set_size(t_mlx *ml);
 void	set_pers_pos(t_mlx *ml, t_pers *pers);
+int		check_map(char **map);
 char	r_is(t_mlx *ml, char pers_char);
 char	l_is(t_mlx *ml, char pers_char);
 char	d_is(t_mlx *ml, char pers_char);
@@ -111,3 +108,6 @@ int		isany(t_mlx *ml, char pers_char);
 int		replace1(t_mlx *ml, char old, char nw);
 
 #endif
+/*
+int		treat_click(int keycode, t_mlx *mlx);
+*/
