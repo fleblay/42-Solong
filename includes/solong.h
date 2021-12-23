@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 11:57:35 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 12:45:27 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	mv_r(t_mlx *ml, char pers_char);
 void	mv_l(t_mlx *ml, char pers_char);
 void	mv_u(t_mlx *ml, char pers_char);
 void	mv_d(t_mlx *ml, char pers_char);
-int		mv_ok(t_mlx *ml, int move, char pers_char);
+int		mv_nok(t_mlx *ml, int move, char pers_char);
 int		isany(t_mlx *ml, char pers_char);
 int		replace1(t_mlx *ml, char old, char nw);
 

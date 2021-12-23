@@ -6,14 +6,14 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 10:11:43 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/22 18:42:26 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:50:03 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 #include <stddef.h>
 
-int	mv_ok(t_mlx *ml, int move, char pers_char)
+int	mv_nok(t_mlx *ml, int move, char pers_char)
 {
 	char	(*tab[5])(t_mlx *, char);
 	int		tile;
@@ -25,10 +25,10 @@ int	mv_ok(t_mlx *ml, int move, char pers_char)
 	tab[4] = &d_is;
 	tile = tab[move](ml, pers_char);
 	if (pers_char == 'P' && (tile == '0' || tile == 'C'))
-		return (1);
+		return (0);
 	else if (tile == '0')
-		return (1);
-	return (0);
+		return (0);
+	return (tile);
 }
 
 int	isany(t_mlx *ml, char pers_char)

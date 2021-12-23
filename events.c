@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 12:01:44 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/23 13:00:31 by fred             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 int	treat_press(int keycode, t_mlx *mlx)
 {
-	if (keycode == 2 && !mlx->hro.mv && mv_ok(mlx, right, mlx->hro.c))
+	if (keycode == 2 && !mlx->hro.mv && !mv_nok(mlx, right, mlx->hro.c))
 		mlx->hro.mv = right;
-	else if (keycode == 0 && !mlx->hro.mv && mv_ok(mlx, left, mlx->hro.c))
+	else if (keycode == 0 && !mlx->hro.mv && !mv_nok(mlx, left, mlx->hro.c))
 		mlx->hro.mv = left;
-	else if (keycode == 1 && !mlx->hro.mv && mv_ok(mlx, down, mlx->hro.c))
+	else if (keycode == 1 && !mlx->hro.mv && !mv_nok(mlx, down, mlx->hro.c))
 		mlx->hro.mv = down;
-	else if (keycode == 13 && !mlx->hro.mv && mv_ok(mlx, up, mlx->hro.c))
+	else if (keycode == 13 && !mlx->hro.mv && !mv_nok(mlx, up, mlx->hro.c))
 		mlx->hro.mv = up;
 	else if (keycode == 53)
 	{
@@ -89,10 +89,35 @@ void	get_foe_mv(t_mlx *ml)
 		ml->foe.mv = ml->foe.pmv;
 		if (!ml->foe.mv)
 			ml->foe.mv++;
-		while (!mv_ok(ml, ml->foe.mv, ml->foe.c))
+		while (ml->foe.mv && mv_nok(ml, ml->foe.mv, ml->foe.c))
 		{
+			if (mv_nok(ml, ml->foe.mv, ml->foe.c) == 'P')
+				printf("Colide Hero\n");
+			ml->foe.mv = (ml->foe.mv + 1) % 5;
+			trymv++;
+			if (trymv == 4)
+			{
+				ml->foe.wait = 20;
+				ml->foe.mv = 0;
+			}
+		}
+	ml->foe.pmv = ml->foe.mv;
+	}
+}
+/*
+void	get_foe_mv(t_mlx *ml)
+{
+	int	trymv;
+
+	trymv = 0;
+	if (ml->foe.wait == 0 && !ml->foe.mv)
+	{
+		ml->foe.mv = ml->foe.pmv;
+		if (!ml->foe.mv)
 			ml->foe.mv++;
-			ml->foe.mv = ml->foe.mv % 5;
+		while (ml->foe.mv && !mv_ok(ml, ml->foe.mv, ml->foe.c))
+		{
+			ml->foe.mv = (ml->foe.mv + 1) % 5;
 			if (!ml->foe.mv)
 				ml->foe.mv++;
 			trymv++;
@@ -106,3 +131,4 @@ void	get_foe_mv(t_mlx *ml)
 	ml->foe.pmv = ml->foe.mv;
 	}
 }
+*/
