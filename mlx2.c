@@ -6,7 +6,7 @@
 /*   By: fle-blay <fle-blay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:49:14 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/24 09:58:42 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/24 14:07:16 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	custom_exit(t_mlx *ml)
 	free(ml->col);
 	mlx_destroy_window(ml->mlx, ml->win);
 	free(ml->mlx);
+	//char *ptr = malloc(sizeof(char) * 7);
+	//(void)ptr;
 	exit(0);
 }
 /* Free tout sauf la win qui est destroy par la fonction ad-hoc */

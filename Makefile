@@ -10,11 +10,14 @@ INCLUDES = -I ./includes
 NAME = so_long
 
 #CC = /usr/bin/gcc
+#CC = /opt/homebrew/bin/gcc-11
+CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 #CC = /usr/bin/clang
-CC = /opt/homebrew/opt/llvm@13/bin/clang
+#CC = /opt/homebrew/opt/llvm@13/bin/clang
+
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
 
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-#CFLAGS = -fsanitize=address -g3
 
 all : ${NAME}
 
@@ -39,3 +42,6 @@ fclean : clean
 re : fclean all
 
 .PHONY:  clean fclean re
+
+#Compiler avec les flags et run avec
+#ASAN_OPTIONS=detect_leaks=1 ./a.out par ex
