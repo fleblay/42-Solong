@@ -9,15 +9,22 @@ INCLUDES = -I ./includes
 
 NAME = so_long
 
+#CC = /usr/bin/gcc
+#CC = /usr/bin/clang
+CC = /opt/homebrew/opt/llvm@13/bin/clang
+
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+#CFLAGS = -fsanitize=address -g3
+
 all : ${NAME}
 
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ./minilibx/minilibx_opengl
 	make -C ./libft
-	gcc -Wall -Wextra -Werror -L ./minilibx/minilibx_opengl -lmlx -L ./libft -lft -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
+	${CC} ${CFLAGS} -L ./minilibx/minilibx_opengl -lmlx -L ./libft -lft -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
 
 %.o : %.c ${HEADER}
-	gcc -Wall -Wextra -Werror -c $< ${INCLUDES} -o $@
+	${CC} ${CFLAGS} -c $< ${INCLUDES} -o $@
 
 clean :
 	rm -rf ${OBJS}
