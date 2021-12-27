@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/27 17:02:38 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:29:14 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	put_score(t_mlx *ml)
 	score = ft_itoa(ml->hro.steps);
 	if (!score)
 		return (0);
-	mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
+	(BONUS) && mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
 	if (current_step != ml->hro.steps)
 	{
 		(!BONUS) && printf("Score : %s\n", score);

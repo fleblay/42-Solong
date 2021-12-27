@@ -22,11 +22,9 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 bonus : CFLAGS := ${CFLAGS} -D BONUS=1
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
-
 all : ${NAME}
 
-bonus : $(shell : touch events2.c errors.c) ${NAME}
+bonus : fclean ${NAME}
 
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ./minilibx/minilibx_opengl
@@ -48,7 +46,7 @@ fclean : clean
 
 re : fclean all
 
-.PHONY:  clean fclean re
+.PHONY:  clean fclean re all bonus
 
 #Compiler avec les flags et run avec
 #ASAN_OPTIONS=detect_leaks=1 ./a.out par ex
