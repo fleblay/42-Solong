@@ -6,13 +6,14 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/23 17:01:59 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:58:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
 #include "libft.h"
+#include <stdio.h>
 
 void	load_fx_mv(void (*tab1[])(), void (*tab2[])())
 {
@@ -30,12 +31,18 @@ void	load_fx_mv(void (*tab1[])(), void (*tab2[])())
 
 int	put_score(t_mlx *ml)
 {
-	char	*score;
+	char		*score;
+	static int	current_step = 0;
 
 	score = ft_itoa(ml->hro.steps);
 	if (!score)
 		return (0);
 	mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
+	if (current_step != ml->hro.steps)
+	{
+		printf("Score : %s\n", score);
+		current_step = ml->hro.steps;
+	}
 	free(score);
 	if (ml->gameover)
 	{
@@ -71,11 +78,13 @@ void	animate(t_mlx *ml)
 	load_fx_mv(hro_mv, foe_mv);
 	mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
-	get_foe_mv(ml);
+	if (ml->foe.exist)
+		get_foe_mv(ml);
 	if (!put_score(ml))
 		custom_exit(ml);
 	hro_mv[ml->hro.mv](ml, &mlx_put_image_to_window);
-	foe_mv[ml->foe.mv](ml, &mlx_put_image_to_window);
+	if (ml->foe.exist)
+		foe_mv[ml->foe.mv](ml, &mlx_put_image_to_window);
 	get_end(ml);
 	if (ml->foe.wait > 0)
 		ml->foe.wait--;

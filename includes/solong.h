@@ -6,12 +6,16 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 18:20:01 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 12:39:32 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOLONG_H
 # define SOLONG_H
+
+# ifndef BONUS
+#  define BONUS 0
+# endif
 
 typedef struct s_pers {
 	char	c;
@@ -25,6 +29,7 @@ typedef struct s_pers {
 	int		pmv;
 	int		wait;
 	int		steps;
+	int		exist;
 	void	*idl[6];
 	void	*ridl[6];
 	void	*run[6];
@@ -78,12 +83,16 @@ void	mv_leftfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_upfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	mv_downfoe(t_mlx *ml, int (*fx)(void *, void *, void *, int, int));
 void	init_pers(t_pers *pers, char pers_char);
-void	init_mlx_struct(t_mlx *ml, char *name, char *file);
-void	load_hero_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
-void	load_foe_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
-void	load_map_img(t_mlx *ml, void *(*f)(void *, char *, int *, int *));
-void	custom_exit(t_mlx *ml);
-int		treat_press(int keycode, t_mlx *mlx);
+void	init_mlx_struct(t_mlx *ml);
+void	set_mlx_struct(t_mlx *ml, char *name, char *file);
+void	*custom_load_xpm(t_mlx *ml, char *path, int *w, int *h);
+void	load_hero_img(t_mlx *ml, void *(*f)(t_mlx *, char *, int *, int *));
+void	load_foe_img(t_mlx *ml, void *(*f)(t_mlx *, char *, int *, int *));
+void	load_map_img(t_mlx *ml, void *(*f)(t_mlx *, char *, int *, int *));
+void	custom_destroy_img(void *mlx, void *img);
+void	destroy_images(t_mlx *ml);
+int		custom_exit(t_mlx *ml);
+int		treat_press(int keycode, t_mlx *ml);
 void	get_foe_mv(t_mlx *ml);
 void	put_background(t_mlx *ml, int (*f)(void *, void *, void *, int, int));
 int		put_score(t_mlx *ml);
@@ -94,7 +103,7 @@ int		render(t_mlx *ml);
 int		getmap(char *str, t_mlx *ml);
 void	set_size(t_mlx *ml);
 void	set_pers_pos(t_mlx *ml, t_pers *pers);
-int		check_map(char **map);
+int		get_error(t_mlx *ml);
 char	r_is(t_mlx *ml, char pers_char);
 char	l_is(t_mlx *ml, char pers_char);
 char	d_is(t_mlx *ml, char pers_char);

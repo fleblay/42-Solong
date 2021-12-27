@@ -1,5 +1,5 @@
 SRCS = solong.c animate.c animate2.c mlx.c mlx2.c events.c events2.c \
-map.c check_tiles.c check_tiles2.c  mv_hero.c
+map.c check_tiles.c check_tiles2.c  mv_hero.c img_load.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -9,15 +9,17 @@ INCLUDES = -I ./includes
 
 NAME = so_long
 
-#CC = /usr/bin/gcc
-#CC = /opt/homebrew/bin/gcc-11
-CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
-#CC = /usr/bin/clang
-#CC = /opt/homebrew/opt/llvm@13/bin/clang
+CC = gcc
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
+# TEST FLAGS
+#CC = /opt/homebrew/bin/gcc-11
+#CC = /opt/homebrew/opt/llvm@13/bin/clang (SAME AS M1 FLAG?)
+
+#FLAG FOR MAC M1 AFTER CLEAN INSTAL LLVM
+#CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
 
 all : ${NAME}
 

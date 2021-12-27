@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 17:28:18 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 11:02:57 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 #include "solong.h"
 #include <stdio.h>
 
-int	treat_press(int keycode, t_mlx *mlx)
+int	treat_press(int keycode, t_mlx *ml)
 {
-	if (keycode == 2 && !mlx->hro.mv && !mv_nok(mlx, right, mlx->hro.c))
-		mlx->hro.mv = right;
-	else if (keycode == 0 && !mlx->hro.mv && !mv_nok(mlx, left, mlx->hro.c))
-		mlx->hro.mv = left;
-	else if (keycode == 1 && !mlx->hro.mv && !mv_nok(mlx, down, mlx->hro.c))
-		mlx->hro.mv = down;
-	else if (keycode == 13 && !mlx->hro.mv && !mv_nok(mlx, up, mlx->hro.c))
-		mlx->hro.mv = up;
+	if (keycode == 2 && !ml->hro.mv && !mv_nok(ml, right, ml->hro.c))
+		ml->hro.mv = right;
+	else if (keycode == 0 && !ml->hro.mv && !mv_nok(ml, left, ml->hro.c))
+		ml->hro.mv = left;
+	else if (keycode == 1 && !ml->hro.mv && !mv_nok(ml, down, ml->hro.c))
+		ml->hro.mv = down;
+	else if (keycode == 13 && !ml->hro.mv && !mv_nok(ml, up, ml->hro.c))
+		ml->hro.mv = up;
 	else if (keycode == 53)
-		custom_exit(mlx);
+		custom_exit(ml);
 	return (0);
 }
 
@@ -91,7 +91,7 @@ void	get_foe_mv(t_mlx *ml)
 				ml->foe.mv = 0;
 			}
 		}
-	ml->foe.pmv = ml->foe.mv;
+		ml->foe.pmv = ml->foe.mv;
 	}
 }
 

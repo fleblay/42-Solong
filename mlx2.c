@@ -6,7 +6,7 @@
 /*   By: fle-blay <fle-blay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:49:14 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/24 14:07:16 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 12:22:34 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,49 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	custom_exit(t_mlx *ml)
+void	custom_destroy_img(void *mlx, void *img)
+{
+	if (img)
+	{
+		mlx_destroy_image(mlx, img);
+		img = NULL;
+	}
+}
+
+void	destroy_images(t_mlx *ml)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 6)
 	{
-		free (ml->hro.idl[i]);
-		free (ml->hro.ridl[i]);
-		free (ml->hro.run[i]);
-		free (ml->hro.rrun[i]);
-		free (ml->foe.idl[i]);
-		free (ml->foe.ridl[i]);
-		free (ml->foe.run[i]);
-		free (ml->foe.rrun[i]);
-		free(ml->out2[i]);
+		custom_destroy_img(ml->mlx, ml->hro.idl[i]);
+		custom_destroy_img(ml->mlx, ml->hro.ridl[i]);
+		custom_destroy_img(ml->mlx, ml->hro.run[i]);
+		custom_destroy_img(ml->mlx, ml->hro.rrun[i]);
+		custom_destroy_img(ml->mlx, ml->foe.idl[i]);
+		custom_destroy_img(ml->mlx, ml->foe.ridl[i]);
+		custom_destroy_img(ml->mlx, ml->foe.run[i]);
+		custom_destroy_img(ml->mlx, ml->foe.rrun[i]);
+		custom_destroy_img(ml->mlx, ml->out2[i]);
 	}
 	while (i < 15)
-		free(ml->out2[i++]);
-	free(ml->map);
-	free(ml->flo);
-	free(ml->wal);
-	free(ml->exi);
-	free(ml->col);
-	mlx_destroy_window(ml->mlx, ml->win);
+		custom_destroy_img(ml->mlx, ml->out2[i++]);
+	custom_destroy_img(ml->mlx, ml->map);
+	custom_destroy_img(ml->mlx, ml->flo);
+	custom_destroy_img(ml->mlx, ml->wal);
+	custom_destroy_img(ml->mlx, ml->exi);
+	custom_destroy_img(ml->mlx, ml->col);
+}
+
+int	custom_exit(t_mlx *ml)
+{
+	destroy_images(ml);
+	if (ml->win)
+		mlx_destroy_window(ml->mlx, ml->win);
 	free(ml->mlx);
 	//char *ptr = malloc(sizeof(char) * 7);
 	//(void)ptr;
 	exit(0);
+	return (0);
 }
-/* Free tout sauf la win qui est destroy par la fonction ad-hoc */
