@@ -13,14 +13,15 @@ INCLUDES = -I ./includes
 
 NAME = so_long
 
-CC = gcc
 
 # TEST FLAGS
 #CC = /opt/homebrew/bin/gcc-11
 #CC = /opt/homebrew/opt/llvm@13/bin/clang (SAME AS M1 FLAG?)
 
+#NORMAL FLAG FOR 42 MAC
+#CC = gcc
 #FLAG FOR MAC M1 AFTER CLEAN INSTAL LLVM
-#CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
+CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
