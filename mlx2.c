@@ -6,7 +6,7 @@
 /*   By: fle-blay <fle-blay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:49:14 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 12:22:34 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:42:05 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,30 @@ void	destroy_images(t_mlx *ml)
 	custom_destroy_img(ml->mlx, ml->col);
 }
 
+void	print_error(t_mlx *ml)
+{
+	if (ml->error)
+	{
+		printf("Error\n");
+		(ml->error & 1) && printf("Wrong map filename\n");
+		(ml->error & 1 << 1) && printf("Map is not rectangular\n");
+		(ml->error & 1 << 2) && printf("Map has invalid characters\n");
+		(ml->error & 1 << 3) && printf("Map is not surrounded by walls\n");
+		(ml->error & 1 << 4) && printf("Map must have at least one exit, one ");
+		(ml->error & 1 << 4) && printf("collectible and one starting ");
+		(ml->error & 1 << 4) && printf("position\n");
+		(ml->error & 1 << 5) && printf("Too many player starting positions\n");
+		(ml->error & 1 << 6) && printf("Too many exits\n");
+	}
+}
+
 int	custom_exit(t_mlx *ml)
 {
 	destroy_images(ml);
 	if (ml->win)
 		mlx_destroy_window(ml->mlx, ml->win);
 	free(ml->mlx);
-	//char *ptr = malloc(sizeof(char) * 7);
-	//(void)ptr;
+	print_error(ml);
 	exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:12:40 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 13:11:38 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:42:15 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	getmap(char *str, t_mlx *ml)
 	int		ret;
 
 	fd = 0;
+	if (!check_mapname(str))
+		ml->error = ml->error | 1;
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 		custom_exit(ml);
@@ -76,38 +78,28 @@ void	set_pers_pos(t_mlx *ml, t_pers *pers)
 	}
 }
 
-int	check_valid_char(char *s)
+int	get_error(t_mlx *ml)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-	{
-		if (s[i] != '0' && s[i] != '1' && s[i] != 'C' && s[i] != 'E'
-				&& s[i] != 'P' && ((!BONUS) + BONUS * s[i]!= 'F'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	get_error(t_mlx *ml)
-{
-	int error;
-	int i;
-
-	i = 0;
-	error = 0;
 	while (ml->map[i])
 	{
 		if ((int)ft_strlen(ml->map[i]) != ml->mapw)
-			error = error | 1;
+			ml->error = ml->error | 1 << 1;
 		if (!check_valid_char(ml->map[i]))
-			error += 1 << 1;
+			ml->error = ml->error | 1 << 2;
+		if (!check_1and1(ml->map[i]))
+			ml->error = ml->error | 1 << 3;
 		i++;
 	}
-	printf("error : %d\n", error);
-	return (error);
+	if (!check_only_1(ml->map[0]) || !check_only_1(ml->map[--i]))
+		ml->error = ml->error | 1 << 3;
+	if (!nb_of(ml->map, 'C') || !nb_of(ml->map, 'P') || !nb_of(ml->map, 'E'))
+		ml->error = ml->error | 1 << 4;
+	if (nb_of(ml->map, 'P') > 1)
+		ml->error = ml->error | 1 << 5;
+	if (nb_of(ml->map, 'E') > 1)
+		ml->error = ml->error | 1 << 6;
+	return (ml->error);
 }

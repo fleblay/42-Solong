@@ -1,5 +1,5 @@
 SRCS = solong.c animate.c animate2.c mlx.c mlx2.c events.c events2.c \
-map.c check_tiles.c check_tiles2.c  mv_hero.c img_load.c
+map.c check_tiles.c check_tiles2.c mv_hero.c img_load.c errors.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -19,9 +19,14 @@ CC = gcc
 #CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+
+bonus : CFLAGS := ${CFLAGS} -D BONUS=1
+
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/
 
 all : ${NAME}
+
+bonus : $(shell : touch events2.c errors.c) ${NAME}
 
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ./minilibx/minilibx_opengl

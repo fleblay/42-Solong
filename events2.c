@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/27 11:58:03 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:02:38 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	put_score(t_mlx *ml)
 	mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
 	if (current_step != ml->hro.steps)
 	{
-		printf("Score : %s\n", score);
+		(!BONUS) && printf("Score : %s\n", score);
 		current_step = ml->hro.steps;
 	}
 	free(score);
@@ -89,6 +89,5 @@ void	animate(t_mlx *ml)
 	if (ml->foe.wait > 0)
 		ml->foe.wait--;
 }
-
 	/*printf("BEFORE waiting : %d ml->rnd : %d prev : %d foe.mv : %d foe.bsy/
 	: %d\n", ml->foe.wait,  ml->rnd, ml->foe.pmv, ml->foe.mv, ml->foe.bsy);*/

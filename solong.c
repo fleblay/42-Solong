@@ -6,13 +6,13 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 10:17:37 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 11:00:48 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:43:09 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stdio.h>
+#include <stddef.h>
 
 int	main(int ac, char *av[])
 {
@@ -29,6 +29,3 @@ int	main(int ac, char *av[])
 	mlx_loop(ml.mlx);
 	return (0);
 }
-/*
-mlx_hook(ml.win, 4, 1L << 2, treat_click, &ml);
-*/

@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 10:46:42 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:48:26 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_mlx_struct(t_mlx *ml)
 	int	i;
 
 	i = -1;
+	ml->error = 0;
 	ml->timer = 0;
 	ml->rnd = 0;
 	ml->gameover = 0;
