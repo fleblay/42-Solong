@@ -1,5 +1,9 @@
-SRCS = solong.c animate.c animate2.c mlx.c mlx2.c events.c events2.c \
+SRCS_FILES = solong.c animate.c animate2.c mlx.c mlx2.c events.c events2.c \
 map.c check_tiles.c check_tiles2.c mv_hero.c img_load.c errors.c
+
+SRCS_DIR = ./srcs/
+
+SRCS= ${addprefix ${SRCS_DIR}, ${SRCS_FILES}}
 
 OBJS = ${SRCS:.c=.o}
 
@@ -24,7 +28,7 @@ bonus : CFLAGS := ${CFLAGS} -D BONUS=1
 
 all : ${NAME}
 
-bonus : fclean ${NAME}
+bonus : ${NAME}
 
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ./minilibx/minilibx_opengl
