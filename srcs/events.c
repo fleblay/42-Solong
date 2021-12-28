@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 11:02:57 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/28 17:46:47 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@
 
 int	treat_press(int keycode, t_mlx *ml)
 {
-	if (keycode == 2 && !ml->hro.mv && !mv_nok(ml, right, ml->hro.c))
+	if (keycode == KEY_R && !ml->hro.mv && !mv_nok(ml, right, ml->hro.c))
 		ml->hro.mv = right;
-	else if (keycode == 0 && !ml->hro.mv && !mv_nok(ml, left, ml->hro.c))
+	else if (keycode == KEY_L && !ml->hro.mv && !mv_nok(ml, left, ml->hro.c))
 		ml->hro.mv = left;
-	else if (keycode == 1 && !ml->hro.mv && !mv_nok(ml, down, ml->hro.c))
+	else if (keycode == KEY_D && !ml->hro.mv && !mv_nok(ml, down, ml->hro.c))
 		ml->hro.mv = down;
-	else if (keycode == 13 && !ml->hro.mv && !mv_nok(ml, up, ml->hro.c))
+	else if (keycode == KEY_U && !ml->hro.mv && !mv_nok(ml, up, ml->hro.c))
 		ml->hro.mv = up;
-	else if (keycode == 53)
+	else if (keycode == KEY_ESC)
 		custom_exit(ml);
 	return (0);
 }
 
 int	render(t_mlx *ml)
 {
-	if (ml->timer == 256)
+	if (ml->timer == SPEED)
 	{
 		ml->timer = 0;
 		ml->rnd++;
@@ -95,39 +95,21 @@ void	get_foe_mv(t_mlx *ml)
 	}
 }
 
-/*int	treat_click(int keycode, t_mlx *mlx)
-{
-	(void)mlx;
-	printf("button keycode >%d<\n", keycode);
-	return (0);
-}
-*/
-
 /*
-void	get_foe_mv(t_mlx *ml)
+old version for minilibx_opengl
+int	treat_press(int keycode, t_mlx *ml)
 {
-	int	trymv;
-
-	trymv = 0;
-	if (ml->foe.wait == 0 && !ml->foe.mv)
-	{
-		ml->foe.mv = ml->foe.pmv;
-		if (!ml->foe.mv)
-			ml->foe.mv++;
-		while (ml->foe.mv && !mv_ok(ml, ml->foe.mv, ml->foe.c))
-		{
-			ml->foe.mv = (ml->foe.mv + 1) % 5;
-			if (!ml->foe.mv)
-				ml->foe.mv++;
-			trymv++;
-			if (trymv == 4)
-			{
-				ml->foe.wait = 20;
-				ml->foe.mv = 0;
-				break ;
-			}
-		}
-	ml->foe.pmv = ml->foe.mv;
-	}
+	if (keycode == 2 && !ml->hro.mv && !mv_nok(ml, right, ml->hro.c))
+		ml->hro.mv = right;
+	else if (keycode == 0 && !ml->hro.mv && !mv_nok(ml, left, ml->hro.c))
+		ml->hro.mv = left;
+	else if (keycode == 1 && !ml->hro.mv && !mv_nok(ml, down, ml->hro.c))
+		ml->hro.mv = down;
+	else if (keycode == 13 && !ml->hro.mv && !mv_nok(ml, up, ml->hro.c))
+		ml->hro.mv = up;
+	else if (keycode == 53)
+		custom_exit(ml);
+	printf("keycode : %d\n", keycode);
+	return (0);
 }
 */

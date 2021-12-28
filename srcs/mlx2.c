@@ -6,7 +6,7 @@
 /*   By: fle-blay <fle-blay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:49:14 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/28 10:55:00 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/28 18:44:57 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	custom_exit(t_mlx *ml)
 		while (ml->map[i])
 			free(ml->map[i++]);
 	free (ml->map);
-	//mlx_destroy_display(ml->mlx);
+	KILL_DISPLAY && mlx_destroy_display(ml->mlx);
 	free(ml->mlx);
 	print_error(ml);
 	exit(0);

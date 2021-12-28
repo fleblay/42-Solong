@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/27 17:29:14 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/28 15:07:14 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	animate(t_mlx *ml)
 	void	(*foe_mv[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
 
 	load_fx_mv(hro_mv, foe_mv);
-	mlx_clear_window(ml->mlx, ml->win);
+	//mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
 	if (ml->foe.exist)
 		get_foe_mv(ml);

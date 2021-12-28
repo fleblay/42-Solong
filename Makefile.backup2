@@ -14,9 +14,6 @@ INCLUDES = -I ./includes
 MLX_DIR = ./minilibx-linux
 MLX_OLDDIR = ./minilibx/minilibx_opengl
 
-EXTERN_LIB = -L /usr/X11/include/../lib -lXext -lX11
-EXTERN_OLDLIB = -framework OpenGL -framework AppKit
-
 NAME = so_long
 
 #NORMAL FLAG FOR 42 MAC
@@ -28,26 +25,20 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 bonus : CFLAGS += -D NEWBONUS=1
-
-ifeq (${MAKECMDGOALS}, old)
-CFLAGS += -D OLD=1
-MLX_DIR = ${MLX_OLDDIR}
-EXTERNLIB = ${EXTERN_OLDLIB}
-endif
-
+old : CFLAGS += -D OLD=1
+old : MLX_DIR = ${MLX_OLDDIR}
 oldbonus : CFLAGS += -D OLDBONUS=1
 oldbonus : MLX_DIR = ${MLX_OLDDIR}
-oldbonus : EXTERNLIB = ${EXTERN_OLDLIB}
 
 all : ${NAME}
 bonus : ${NAME}
-#old : ${NAME}
+old : ${NAME}
 oldbonus : ${NAME}
 
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ${MLX_DIR}
 	make -C ./libft
-	${CC} ${CFLAGS} -L ${MLX_DIR} -lmlx -L ./libft -lft ${EXTERN_LIB} -o ${NAME} ${OBJS}
+	${CC} ${CFLAGS} -L ${MLX_DIR} -lmlx -L ./libft -lft -L /usr/X11/include/../lib -lXext -lX11 -o ${NAME} ${OBJS}
 
 old : ${OBJS} ${HEADER}
 	make -C ${MLX_DIR}

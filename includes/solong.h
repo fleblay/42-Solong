@@ -6,16 +6,54 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/28 10:51:06 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/28 18:45:24 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOLONG_H
 # define SOLONG_H
 
-# ifndef BONUS
+/*# ifndef BONUS
 #  define BONUS 0
-# endif
+# endif*/
+
+# if defined(OLD)
+#  define KEY_R 2
+#  define KEY_L 0
+#  define KEY_D 1
+#  define KEY_U 13
+#  define KEY_ESC 53
+#  define SPEED 256
+#  define KILL_DISPLAY 0
+#  define BONUS 0
+# elif defined(OLDBONUS)
+#  define KEY_R 2
+#  define KEY_L 0
+#  define KEY_D 1
+#  define KEY_U 13
+#  define KEY_ESC 53
+#  define SPEED 256
+#  define KILL_DISPLAY 0
+#  define BONUS 1
+# elif defined(NEWBONUS)
+#  define KEY_R 100
+#  define KEY_L 97
+#  define KEY_D 115
+#  define KEY_U 119
+#  define KEY_ESC 65307
+#  define SPEED 1200
+#  define KILL_DISPLAY 1
+#  define BONUS 1
+# else
+#  define KEY_R 100
+#  define KEY_L 97
+#  define KEY_D 115
+#  define KEY_U 119
+#  define KEY_ESC 65307
+#  define SPEED 1200
+#  define KILL_DISPLAY 1
+#  define BONUS 0
+#endif
 
 typedef struct s_pers {
 	char	c;
