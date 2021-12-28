@@ -23,8 +23,7 @@ CC = gcc
 #FLAG FOR MAC M1 AFTER CLEAN INSTAL LLVM
 #CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 bonus : CFLAGS := ${CFLAGS} -D BONUS=1
 
@@ -37,7 +36,8 @@ ${NAME} : ${OBJS} ${HEADER}
 	make -C ./minilibx-linux
 	make -C ./libft
 	#${CC} ${CFLAGS} -L ./minilibx/minilibx_opengl -lmlx -L ./libft -lft -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
-	${CC} ${CFLAGS} -L ./minilibx-linux -lmlx -L ./libft -lft -L /usr/X11/include/../lib -lXext -lX11 -lm -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
+	#${CC} ${CFLAGS} -L ./minilibx-linux -lmlx -L ./libft -lft -L /usr/X11/include/../lib -lXext -lX11 -lm -framework OpenGL -framework AppKit -o ${NAME} ${OBJS}
+	${CC} ${CFLAGS} -L ./minilibx-linux -lmlx -L ./libft -lft -L /usr/X11/include/../lib -lXext -lX11 -o ${NAME} ${OBJS}
 
 %.o : %.c ${HEADER}
 	${CC} ${CFLAGS} -c $< ${INCLUDES} -o $@
