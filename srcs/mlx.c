@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:00:50 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 15:48:26 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/28 10:54:15 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,14 @@ void	set_mlx_struct(t_mlx *ml, char *name, char *file)
 	init_pers(&(ml->hro), 'P');
 	init_pers(&(ml->foe), 'F');
 	ml->mlx = mlx_init();
+	if (!ml->mlx)
+		custom_exit(ml);
 	load_hero_img(ml, &custom_load_xpm);
 	load_foe_img(ml, &custom_load_xpm);
 	load_map_img(ml, &custom_load_xpm);
 	getmap(file, ml);
 	ml->win = mlx_new_window(ml->mlx, ml->mapw * ml->flow,
 			ml->maph * ml->floh, name);
+	if (!ml->win)
+		custom_exit(ml);
 }
