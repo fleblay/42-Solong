@@ -25,7 +25,7 @@ CC = gcc
 #FLAG FOR MAC M1 AFTER CLEAN INSTAL LLVM
 #CC = /opt/homebrew/Cellar/llvm/13.0.0_2/bin/clang
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 bonus : CFLAGS += -D NEWBONUS=1
 
@@ -47,7 +47,7 @@ oldbonus : ${NAME}
 ${NAME} : ${OBJS} ${HEADER}
 	make -C ${MLX_DIR}
 	make -C ./libft
-	${CC} ${CFLAGS} -L ${MLX_DIR} -lmlx -L ./libft -lft ${EXTERN_LIB} -o ${NAME} ${OBJS}
+	${CC} ${CFLAGS} ${OBJS} -L ./libft -lft -L ${MLX_DIR} -lmlx ${EXTERN_LIB} -o ${NAME}
 
 old : ${OBJS} ${HEADER}
 	make -C ${MLX_DIR}
