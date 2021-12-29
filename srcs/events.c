@@ -6,13 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:02:12 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/28 17:46:47 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:27:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stdio.h>
 
 int	treat_press(int keycode, t_mlx *ml)
 {

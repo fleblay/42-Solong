@@ -6,16 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 11:14:11 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/28 18:45:24 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:24:01 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOLONG_H
 # define SOLONG_H
-
-/*# ifndef BONUS
-#  define BONUS 0
-# endif*/
 
 # if defined(OLD)
 #  define KEY_R 2
@@ -53,7 +49,7 @@
 #  define SPEED 1200
 #  define KILL_DISPLAY 1
 #  define BONUS 0
-#endif
+# endif
 
 typedef struct s_pers {
 	char	c;

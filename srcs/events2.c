@@ -6,7 +6,7 @@
 /*   By: fred <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 11:00:18 by fred              #+#    #+#             */
-/*   Updated: 2021/12/28 15:07:14 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:27:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	put_score(t_mlx *ml)
 
 	score = ft_itoa(ml->hro.steps);
 	if (!score)
-		return (0);
+		custom_exit(ml);
 	(BONUS) && mlx_string_put(ml->mlx, ml->win, 0, 12, 0x00FF0000, score);
 	if (current_step != ml->hro.steps)
 	{
@@ -76,7 +76,6 @@ void	animate(t_mlx *ml)
 	void	(*foe_mv[5])(t_mlx *m, int (*f)(void *, void *, void *, int, int));
 
 	load_fx_mv(hro_mv, foe_mv);
-	//mlx_clear_window(ml->mlx, ml->win);
 	put_background(ml, &mlx_put_image_to_window);
 	if (ml->foe.exist)
 		get_foe_mv(ml);

@@ -6,13 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:09:55 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 11:01:51 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/29 10:27:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stdio.h>
 
 void	idle_persfoe(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 {

@@ -6,7 +6,7 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 12:12:40 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 16:42:15 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:28:35 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "libft.h"
-#include <stdio.h>
-#include <errno.h>
 
 int	getmap(char *str, t_mlx *ml)
 {

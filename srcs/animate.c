@@ -6,13 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 11:51:19 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/23 11:01:17 by fred             ###   ########.fr       */
+/*   Updated: 2021/12/29 10:27:03 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stdio.h>
 
 void	idle_pers(t_mlx *ml, int (*f)(void *, void *, void *, int, int))
 {

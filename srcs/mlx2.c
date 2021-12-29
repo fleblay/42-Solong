@@ -6,7 +6,7 @@
 /*   By: fle-blay <fle-blay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:49:14 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/28 18:44:57 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:28:19 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@
 void	custom_destroy_img(void *mlx, void *img)
 {
 	if (img)
-	{
 		mlx_destroy_image(mlx, img);
-		img = NULL;
-	}
 }
 
 void	destroy_images(t_mlx *ml)

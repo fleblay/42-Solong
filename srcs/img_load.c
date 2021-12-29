@@ -6,13 +6,12 @@
 /*   By: fle-blay <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 09:34:54 by fle-blay          #+#    #+#             */
-/*   Updated: 2021/12/27 10:16:54 by fle-blay         ###   ########.fr       */
+/*   Updated: 2021/12/29 10:27:06 by fle-blay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "solong.h"
-#include <stddef.h>
 
 void	*custom_load_xpm(t_mlx *ml, char *path, int *w, int *h)
 {
